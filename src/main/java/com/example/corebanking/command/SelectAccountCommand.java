@@ -1,21 +1,22 @@
 package com.example.corebanking.command;
 
-import com.example.corebanking.model.Account;
-import com.example.corebanking.model.ActiveSession;
-import com.example.corebanking.repository.AccountRepository;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellCommandGroup;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
-import java.util.Optional;
+import com.example.corebanking.model.Account;
+import com.example.corebanking.model.ActiveSession;
+import com.example.corebanking.repository.AccountRepository;
 
 @ShellCommandGroup("CoreBanking Commands")
 @ShellComponent
 public class SelectAccountCommand {
 
     private static final String ACCOUNT_SELECTED_SUCCESSFULLY = "Account selected successfully: ";
-    private static final String ACCOUNT_NOT_EXISTS = "Account id does not exist: ";
+    private static final String ACCOUNT_NOT_EXISTS = "Account does not exist: ";
 
     @Autowired
     private AccountRepository accountRepository;

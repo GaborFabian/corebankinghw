@@ -1,13 +1,14 @@
 package com.example.corebanking.command;
 
-import com.example.corebanking.model.Account;
-import com.example.corebanking.repository.AccountRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellCommandGroup;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
-import java.util.List;
+import com.example.corebanking.model.Account;
+import com.example.corebanking.repository.AccountRepository;
 
 @ShellCommandGroup("CoreBanking Commands")
 @ShellComponent

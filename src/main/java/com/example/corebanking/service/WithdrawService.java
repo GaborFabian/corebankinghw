@@ -1,11 +1,12 @@
 package com.example.corebanking.service;
 
-import com.example.corebanking.exception.InvalidAmountException;
-import com.example.corebanking.exception.NotEnoughBalanceException;
-import com.example.corebanking.model.Account;
-import com.example.corebanking.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.example.corebanking.model.Account;
+import com.example.corebanking.repository.AccountRepository;
+import com.example.corebanking.validator.AmountValidator;
+import com.example.corebanking.validator.BalanceValidator;
 
 @Component
 public class WithdrawService {
@@ -13,24 +14,16 @@ public class WithdrawService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public void withdraw(Account account, int amount) throws NotEnoughBalanceException, InvalidAmountException {
-        if (isValidAmount(amount) && isEnoughBalance(account, amount)) {
+    @Autowired
+    private AmountValidator amountValidator;
+
+    @Autowired
+    private BalanceValidator balanceValidator;
+
+    public void withdraw(Account account, int amount) {
+        if (amountValidator.isValidAmount(amount) && balanceValidator.isEnoughBalance(account, amount)) {
             makeWithdraw(account, amount);
         }
-    }
-
-    private boolean isEnoughBalance(Account account, int amount) throws NotEnoughBalanceException {
-        if(account.getBalance() < amount) {
-            throw new NotEnoughBalanceException();
-        }
-        return true;
-    }
-
-    private boolean isValidAmount(int amount) throws InvalidAmountException {
-        if(amount <= 0) {
-            throw new InvalidAmountException();
-        }
-        return true;
     }
 
     private void makeWithdraw(Account account, int amount) {

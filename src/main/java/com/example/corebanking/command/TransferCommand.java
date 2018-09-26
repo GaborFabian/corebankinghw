@@ -7,11 +7,11 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 import com.example.corebanking.model.ActiveSession;
-import com.example.corebanking.service.WithdrawService;
+import com.example.corebanking.service.TransferService;
 
 @ShellCommandGroup("CoreBanking Commands")
 @ShellComponent
-public class WithdrawCommand {
+public class TransferCommand {
 
     private static final String NO_ACCOUNT_SELECTED = "no account selected. Select an account with the 'select' command.";
 
@@ -19,16 +19,17 @@ public class WithdrawCommand {
     private ActiveSession activeSession;
 
     @Autowired
-    private WithdrawService withdrawService;
+    private TransferService transferService;
 
-    @ShellMethod("Withdraw certain amount of money from the selected bank account.")
-    public void withdraw(int amount) {
-        withdrawService.withdraw(activeSession.getAccount(), amount);
+    @ShellMethod("Transfer certain amount of money from the selected bank account to an another account")
+    public void transfer(int accountID, int amount) {
+        transferService.transfer(activeSession.getAccount(), accountID, amount);
     }
 
-    public Availability withdrawAvailability() {
+    public Availability transferAvailability() {
         return activeSession.getAccount() != null
                 ? Availability.available()
                 : Availability.unavailable(NO_ACCOUNT_SELECTED);
     }
 }
+
